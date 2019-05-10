@@ -1,4 +1,5 @@
 from ctypes import *
+import os
 import math
 import random
 
@@ -42,10 +43,9 @@ class METADATA(Structure):
     _fields_ = [("classes", c_int),
                 ("names", POINTER(c_char_p))]
 
-    
 
-#lib = CDLL("/home/pjreddie/documents/darknet/libdarknet.so", RTLD_GLOBAL)
-lib = CDLL("/home/ubuntu/prediction/darknet_vogo/libdarknet.so", RTLD_GLOBAL)
+darknet_lib_path = os.getenv("PREDICTION_DARKNET_PATH", "libdarknet.so")
+lib = CDLL(darknet_lib_path, RTLD_GLOBAL)
 lib.network_width.argtypes = [c_void_p]
 lib.network_width.restype = c_int
 lib.network_height.argtypes = [c_void_p]
